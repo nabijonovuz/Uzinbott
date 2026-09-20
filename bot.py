@@ -22,8 +22,8 @@ from aiogram.types import (
 BOT_TOKEN = os.environ["BOT_TOKEN"]
 ADMIN_ID = int(os.environ["ADMIN_ID"])
 
-JOBS_CHANNEL_URL = "https://t.me/KANAL_USERNAME"
-MARKET_CHANNEL_URL = "https://t.me/KANAL_USERNAME"
+JOBS_CHANNEL_URL = "https://t.me/uzinuae"
+MARKET_CHANNEL_URL = "https://t.me/uzinuae"
 
 CARD_NUMBER = "XXXX XXXX XXXX XXXX"
 CARD_OWNER = "XXXXX XXXXX"
