@@ -2,6 +2,7 @@ import asyncio
 import html
 import logging
 import os
+import stats
 
 from aiogram import Bot, Dispatcher, F
 from aiogram.client.default import DefaultBotProperties
@@ -196,6 +197,7 @@ async def forward_to_admin(bot: Bot, message: Message) -> None:
 
 
 dp = Dispatcher(storage=MemoryStorage())
+stats.setup(dp, ADMIN_ID)
 
 
 @dp.message(CommandStart())
