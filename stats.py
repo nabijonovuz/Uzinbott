@@ -21,7 +21,36 @@ def _db() -> sqlite3.Connection:
         "user_id INTEGER PRIMARY KEY, username TEXT, full_name TEXT, "
         "joined TEXT DEFAULT CURRENT_TIMESTAMP, active INTEGER DEFAULT 1)"
     )
+    try:
+        con.execute("ALTER TABLE users ADD COLUMN lang TEXT")
+    except sqlite3.OperationalError:
+        pass
     return con
+
+
+def get_lang(user_id: int):
+    try:
+        con = _db()
+        row = con.execute("SELECT lang FROM users WHERE user_id=?", (user_id,)).fetchone()
+        con.close()
+        return row[0] if row and row[0] else None
+    except Exception as e:
+        logging.error("Tilni o'qib bo'lmadi: %s", e)
+        return None
+
+
+def set_lang(user_id: int, lang: str) -> None:
+    try:
+        con = _db()
+        with con:
+            con.execute(
+                "INSERT INTO users (user_id, lang) VALUES (?, ?) "
+                "ON CONFLICT(user_id) DO UPDATE SET lang=excluded.lang",
+                (user_id, lang),
+            )
+        con.close()
+    except Exception as e:
+        logging.error("Tilni saqlab bo'lmadi: %s", e)
 
 
 def add_user(user) -> None:
